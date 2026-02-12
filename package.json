@@ -1,0 +1,55 @@
+{
+  "name": "@aevov/apl",
+  "version": "1.0.0",
+  "description": "The world's first hardware-native neurosymbolic programming language",
+  "main": "src/index.js",
+  "browser": "dist/apl.bundle.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "webpack --mode production",
+    "build:dev": "webpack --mode development",
+    "test": "jest",
+    "lint": "eslint src/",
+    "docs": "jsdoc -c jsdoc.json",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "apl",
+    "quantum",
+    "neural",
+    "ai",
+    "neurosymbolic",
+    "hardware-acceleration",
+    "programming-language",
+    "compiler",
+    "runtime"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aevov/apl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aevov/apl/issues"
+  },
+  "homepage": "https://apl.aevov.ai",
+  "files": [
+    "src/",
+    "dist/",
+    "types/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.0",
+    "eslint": "^8.45.0",
+    "jest": "^29.6.0",
+    "jsdoc": "^4.0.2"
+  },
+  "dependencies": {},
+  "peerDependencies": {}
+}

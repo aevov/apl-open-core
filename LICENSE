@@ -1,0 +1,46 @@
+Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+Copyright 2025 Aevov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+---
+
+NOTICE: Hardware Intellectual Property
+
+While the APL programming language, compiler, and associated software tools 
+are licensed under Apache 2.0 (open source), the following components are 
+proprietary and require separate commercial licensing:
+
+- .aevQG∞ hardware instruction set architecture (ISA)
+- Quantum functional unit (QFU) implementations
+- Neural processing unit (NPU) hardware designs
+- Genetic evolution unit (GEU) specifications
+- Hardware compiler backend and optimizations
+- Performance-critical acceleration algorithms
+
+For hardware licensing inquiries, contact: hardware@aevov.ai
+
+This dual-licensing model enables:
+1. Free use and learning of the APL language
+2. Commercial adoption with hardware acceleration licenses
+3. Open-source ecosystem development
+4. Proprietary hardware IP protection
+
+The APL language and software tools work on any standard hardware (x86, ARM, etc.) 
+without requiring .aevQG∞ licensing. Hardware licenses provide 100-1000x performance 
+improvements for AI workloads through native silicon acceleration.

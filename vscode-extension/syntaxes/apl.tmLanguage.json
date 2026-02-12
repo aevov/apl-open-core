@@ -1,0 +1,236 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "APL",
+  "scopeName": "source.apl",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#runic-operations"
+    },
+    {
+      "include": "#ascii-operations"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#functions"
+    },
+    {
+      "include": "#variables"
+    },
+    {
+      "include": "#operators"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.apl",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.apl",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.apl",
+          "match": "\\b(function|if|else|for|while|return|let|const|var|in|break|continue)\\b"
+        },
+        {
+          "name": "keyword.operator.logical.apl",
+          "match": "\\b(and|or|not)\\b"
+        },
+        {
+          "name": "storage.type.apl",
+          "match": "\\b(Int|Float|Bool|Array|Map|QReg|Spike|Neuron|Synapse|QState|EPR)\\b"
+        }
+      ]
+    },
+    "runic-operations": {
+      "patterns": [
+        {
+          "name": "entity.name.function.quantum.apl",
+          "match": "[ᛩᛜᙠᛪ]",
+          "comment": "Quantum operations (QFU)"
+        },
+        {
+          "name": "entity.name.function.genetic.apl",
+          "match": "[ᚴᚠᚥ]",
+          "comment": "Genetic operations (GEU)"
+        },
+        {
+          "name": "entity.name.function.neural.apl",
+          "match": "[ᚾᛈᛒᚻ]",
+          "comment": "Neural operations (NPU)"
+        },
+        {
+          "name": "entity.name.function.consciousness.apl",
+          "match": "[ᚳᛇ]",
+          "comment": "Consciousness operations (CU)"
+        },
+        {
+          "name": "entity.name.function.symbolic.apl",
+          "match": "[ᛊᛕ]",
+          "comment": "Symbolic operations (SRE)"
+        },
+        {
+          "name": "entity.name.function.resonance.apl",
+          "match": "[ᛟᚱ]",
+          "comment": "Resonance operations (RU)"
+        },
+        {
+          "name": "entity.name.function.memory.apl",
+          "match": "[ᛗ]",
+          "comment": "Memory operations (MU)"
+        },
+        {
+          "name": "entity.name.function.coordination.apl",
+          "match": "[ᛞᚢᛂ]",
+          "comment": "Coordination operations (COORD)"
+        },
+        {
+          "name": "entity.name.function.control.apl",
+          "match": "[ᚤᛘᛎ]",
+          "comment": "Control flow operations"
+        }
+      ]
+    },
+    "ascii-operations": {
+      "patterns": [
+        {
+          "name": "entity.name.function.quantum.apl",
+          "match": "\\b(Q\\.(super|gate|entangle|teleport))\\b"
+        },
+        {
+          "name": "entity.name.function.genetic.apl",
+          "match": "\\b(G\\.(cross|fitness|mutate))\\b"
+        },
+        {
+          "name": "entity.name.function.neural.apl",
+          "match": "\\b(N\\.(net|match|synapse|learn))\\b"
+        },
+        {
+          "name": "entity.name.function.consciousness.apl",
+          "match": "\\b(C\\.(phi|integrate))\\b"
+        },
+        {
+          "name": "entity.name.function.symbolic.apl",
+          "match": "\\b(S\\.(reason|graph))\\b"
+        },
+        {
+          "name": "entity.name.function.resonance.apl",
+          "match": "\\b(R\\.(osc|sync))\\b"
+        },
+        {
+          "name": "entity.name.function.memory.apl",
+          "match": "\\b(M\\.access)\\b"
+        },
+        {
+          "name": "entity.name.function.coordination.apl",
+          "match": "\\b(D\\.(dist|unify|bind))\\b"
+        },
+        {
+          "name": "entity.name.function.control.apl",
+          "match": "\\b(C\\.(rate|yield|init))\\b"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.apl",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.apl",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.apl",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.apl",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.apl",
+          "match": "\\b[0-9]+\\.[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.apl",
+          "match": "\\b[0-9]+\\b"
+        },
+        {
+          "name": "constant.numeric.hex.apl",
+          "match": "\\b0x[0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.binary.apl",
+          "match": "\\b0b[01]+\\b"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.apl",
+          "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.apl",
+          "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.arithmetic.apl",
+          "match": "[+\\-*/%]"
+        },
+        {
+          "name": "keyword.operator.comparison.apl",
+          "match": "(==|!=|<=|>=|<|>)"
+        },
+        {
+          "name": "keyword.operator.assignment.apl",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.logical.apl",
+          "match": "(&&|\\|\\||!)"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "name": "apl-vscode",
+  "displayName": "APL Language Support",
+  "description": "Comprehensive language support for APL (Aevov Programming Language) with syntax highlighting, IntelliSense, and debugging",
+  "version": "1.0.0",
+  "publisher": "aevov",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Debuggers",
+    "Snippets",
+    "Formatters"
+  ],
+  "keywords": [
+    "apl",
+    "quantum",
+    "neural",
+    "neurosymbolic",
+    "runic"
+  ],
+  "activationEvents": [
+    "onLanguage:apl",
+    "onDebug:apl"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "apl",
+        "aliases": [
+          "APL",
+          "apl",
+          "Aevov Programming Language"
+        ],
+        "extensions": [
+          ".apl",
+          ".aevov"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/apl-icon.png",
+          "dark": "./icons/apl-icon.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "apl",
+        "scopeName": "source.apl",
+        "path": "./syntaxes/apl.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "apl",
+        "path": "./snippets/apl.json"
+      }
+    ],
+    "themes": [
+      {
+        "label": "APL Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/apl-dark.json"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "apl",
+        "label": "APL Debug",
+        "program": "./debugger/debugAdapter.js",
+        "runtime": "node",
+        "configurationAttributes": {
+          "launch": {
+            "required": ["program"],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "Path to APL file to debug"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "description": "Automatically stop after launch",
+                "default": true
+              },
+              "trace": {
+                "type": "boolean",
+                "description": "Enable logging",
+                "default": true
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "apl",
+            "request": "launch",
+            "name": "Debug APL",
+            "program": "${file}",
+            "stopOnEntry": true
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "apl.run",
+        "title": "APL: Run Program"
+      },
+      {
+        "command": "apl.compile",
+        "title": "APL: Compile to Bytecode"
+      },
+      {
+        "command": "apl.convertToRunic",
+        "title": "APL: Convert to Runic"
+      },
+      {
+        "command": "apl.convertToAscii",
+        "title": "APL: Convert to ASCII"
+      },
+      {
+        "command": "apl.showBytecode",
+        "title": "APL: Show Compiled Bytecode"
+      },
+      {
+        "command": "apl.installPackage",
+        "title": "APL: Install Package"
+      }
+    ],
+    "configuration": {
+      "title": "APL",
+      "properties": {
+        "apl.syntaxMode": {
+          "type": "string",
+          "default": "auto",
+          "enum": ["ascii", "runic", "auto"],
+          "description": "Preferred syntax mode"
+        },
+        "apl.hardwareAcceleration": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable .aevQG∞ hardware acceleration"
+        },
+        "apl.debugLevel": {
+          "type": "string",
+          "default": "info",
+          "enum": ["none", "error", "warn", "info", "debug"],
+          "description": "Debug output level"
+        },
+        "apl.autoComplete": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable intelligent auto-completion"
+        },
+        "apl.linting": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable real-time linting"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.75.0",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "@aevov/apl": "^1.0.0"
+  }
+}

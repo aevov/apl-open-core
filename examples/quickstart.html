@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APL Quick Start</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 20px;
+            color: #333;
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        pre {
+            background: #1e1e1e;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+        }
+        
+        .runic {
+            font-size: 1.2em;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ APL Quick Start</h1>
+        <p>The world's first hardware-native neurosymbolic language</p>
+        
+        <h2>Try It Now!</h2>
+        
+        <button onclick="runHello()">Hello World</button>
+        <button onclick="runQuantum()">Quantum</button>
+        <button onclick="runNeural()">Neural</button>
+        <button onclick="runRunic()">Runic Mode</button>
+        
+        <h3>Output:</h3>
+        <pre id="output">> Click a button to run code...</pre>
+        
+        <h3>ASCII Syntax:</h3>
+        <pre>q = Q.super(2)
+Q.gate(q, "hadamard")</pre>
+        
+        <h3>Runic Syntax:</h3>
+        <pre class="runic">q = ᛩ(2)
+ᛜ(q, "hadamard")</pre>
+        
+        <p><strong>Both compile to identical bytecode!</strong></p>
+        
+        <h3>Installation:</h3>
+        <pre>npm install @aevov/apl</pre>
+        
+        <h3>Learn More:</h3>
+        <ul>
+            <li><a href="README.md">Documentation</a></li>
+            <li><a href="examples/demo.html">Interactive Playground</a></li>
+            <li><a href="GETTING_STARTED.md">Getting Started Guide</a></li>
+        </ul>
+    </div>
+    
+    <script src="dist/apl.bundle.js"></script>
+    <script>
+        const output = document.getElementById('output');
+        
+        async function runHello() {
+            output.textContent = '> Running...\n';
+            const apl = new APL();
+            const result = await apl.run('print("Hello from APL!")');
+            output.textContent = `> Success!\n\n${JSON.stringify(result, null, 2)}`;
+        }
+        
+        async function runQuantum() {
+            output.textContent = '> Running quantum code...\n';
+            const apl = new APL();
+            const result = await apl.run(`
+                q = Q.super(2)
+                Q.gate(q, "hadamard", 0)
+                print("Quantum superposition created!")
+            `);
+            output.textContent = `> Quantum Success!\n\n${JSON.stringify(result, null, 2)}`;
+        }
+        
+        async function runNeural() {
+            output.textContent = '> Running neural code...\n';
+            const apl = new APL();
+            const result = await apl.run(`
+                net = N.net(100)
+                print("Neural network created!")
+            `);
+            output.textContent = `> Neural Success!\n\n${JSON.stringify(result, null, 2)}`;
+        }
+        
+        async function runRunic() {
+            output.textContent = '> Running runic code...\n';
+            const apl = new APL({ mode: 'runic' });
+            const result = await apl.run(`
+                q = ᛩ(2)
+                ᛜ(q, "hadamard")
+                print("Runic mode works!")
+            `);
+            output.textContent = `> Runic Success!\n\nMode: ${result.compiled.sourceMode}\n\n${JSON.stringify(result, null, 2)}`;
+        }
+        
+        output.textContent = `> APL v${APL.version} loaded!\n> Framework ready. Click a button to test.`;
+    </script>
+</body>
+</html>

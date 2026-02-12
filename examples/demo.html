@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APL - The World's First Hardware-Native Neurosymbolic Language</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 0 40px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #ffd89b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #fdeb71 0%, #f8d800 100%);
+            color: #333;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .feature-card p {
+            color: rgba(255,255,255,0.95);
+        }
+        
+        .playground {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .playground h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        .mode-selector {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .mode-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .mode-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transform: scale(1.05);
+        }
+        
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .editor-panel {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .editor-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            font-weight: 600;
+        }
+        
+        .editor-content {
+            padding: 0;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 300px;
+            padding: 20px;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .runic-display {
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            background: #f8f9fa;
+            min-height: 300px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+        }
+        
+        .output {
+            background: #1e1e1e;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            min-height: 100px;
+            margin-bottom: 20px;
+        }
+        
+        .examples {
+            margin-bottom: 20px;
+        }
+        
+        .examples select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            font-size: 1em;
+            color: #333;
+            background: white;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-card h4 {
+            color: #333;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .value {
+            color: #333;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        
+        .installation {
+            background: linear-gradient(135deg, #ff9a56 0%, #ffce96 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+        
+        .installation h2 {
+            margin-bottom: 20px;
+        }
+        
+        .code-block {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin-top: 40px;
+        }
+        
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        
+        .links a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ APL</h1>
+            <div class="subtitle">The World's First Hardware-Native Neurosymbolic Language</div>
+            <span class="version-badge">v1.0.0 - Production Ready</span>
+        </header>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>🔮 Quantum Native</h3>
+                <p>Direct quantum operations with zero overhead compilation to quantum hardware</p>
+            </div>
+            <div class="feature-card">
+                <h3>🧠 Neural Hardware</h3>
+                <p>Neuromorphic computing primitives mapped directly to spiking neural accelerators</p>
+            </div>
+            <div class="feature-card">
+                <h3>🧬 Genetic Algorithms</h3>
+                <p>Hardware-accelerated evolutionary computation and fitness evaluation</p>
+            </div>
+            <div class="feature-card">
+                <h3>📚 Symbolic Reasoning</h3>
+                <p>Knowledge graphs and logical inference with neurosymbolic unification</p>
+            </div>
+        </div>
+
+        <div class="playground">
+            <h2>🎮 Interactive Playground</h2>
+            
+            <div class="examples">
+                <select id="exampleSelect">
+                    <option value="">Select an example...</option>
+                    <option value="helloWorld">Hello World</option>
+                    <option value="quantumSuperposition">Quantum Superposition</option>
+                    <option value="neuralLearning">Neural Learning</option>
+                    <option value="geneticEvolution">Genetic Evolution</option>
+                    <option value="neurosymbolicReasoning">Neurosymbolic Reasoning</option>
+                    <option value="completeAI">Complete AI System</option>
+                </select>
+            </div>
+
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="ascii">ASCII Mode</button>
+                <button class="mode-btn" data-mode="runic">Runic Mode</button>
+            </div>
+
+            <div class="editor-container">
+                <div class="editor-panel">
+                    <div class="editor-header">Code Editor</div>
+                    <div class="editor-content">
+                        <textarea id="codeEditor" placeholder="Write your APL code here...">// Simple example
+print("Hello from APL!")</textarea>
+                    </div>
+                </div>
+                <div class="editor-panel">
+                    <div class="editor-header">Runic Preview</div>
+                    <div class="editor-content">
+                        <div id="runicPreview" class="runic-display">// Simple example
+print("Hello from APL!")</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="runBtn">▶️ Run Code</button>
+                <button class="btn btn-secondary" id="compileBtn">🔨 Compile</button>
+                <button class="btn btn-secondary" id="clearBtn">🗑️ Clear</button>
+            </div>
+
+            <div class="output" id="output">> Ready. Enter code and click Run or Compile...</div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <h4>Compiled Ops</h4>
+                    <div class="value" id="opsCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Execution Time</h4>
+                    <div class="value" id="execTime">0ms</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Mode</h4>
+                    <div class="value" id="modeDisplay">ASCII</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="installation">
+            <h2>📦 Installation</h2>
+            
+            <h3>Via NPM</h3>
+            <div class="code-block">npm install @aevov/apl</div>
+            
+            <h3>Via CDN</h3>
+            <div class="code-block">&lt;script src="https://cdn.aevov.ai/apl/v1.0.0/apl.bundle.js"&gt;&lt;/script&gt;</div>
+            
+            <h3>Quick Start</h3>
+            <div class="code-block">const APL = require('@aevov/apl');
+const apl = new APL();
+
+// Run some code
+await apl.run(`
+    q = Q.super(2)
+    Q.gate(q, "hadamard")
+    print("Quantum superposition created!")
+`);</div>
+        </div>
+
+        <footer>
+            <h2>🚀 Join the Future of Programming</h2>
+            <p>Open source language. Optional hardware acceleration.</p>
+            <div class="links">
+                <a href="https://github.com/aevov/apl">GitHub</a>
+                <a href="https://docs.apl.aevov.ai">Documentation</a>
+                <a href="https://apl.aevov.ai">Official Site</a>
+                <a href="https://discord.gg/apl">Discord</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.8;">
+                © 2025 Aevov. Language: Apache 2.0 | Hardware IP: Proprietary
+            </p>
+        </footer>
+    </div>
+
+    <!-- Load APL Bundle -->
+    <script src="../dist/apl.bundle.js"></script>
+    <script src="examples.js"></script>
+    
+    <script>
+        // Initialize APL
+        const apl = new APL({ debug: true });
+        let currentMode = 'ascii';
+        
+        // Elements
+        const codeEditor = document.getElementById('codeEditor');
+        const runicPreview = document.getElementById('runicPreview');
+        const output = document.getElementById('output');
+        const exampleSelect = document.getElementById('exampleSelect');
+        const opsCount = document.getElementById('opsCount');
+        const execTime = document.getElementById('execTime');
+        const modeDisplay = document.getElementById('modeDisplay');
+        
+        // Mode switching
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentMode = btn.dataset.mode;
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                modeDisplay.textContent = currentMode.toUpperCase();
+                updatePreview();
+            });
+        });
+        
+        // Update runic preview
+        function updatePreview() {
+            const code = codeEditor.value;
+            if (currentMode === 'runic') {
+                runicPreview.textContent = apl.toRunic(code);
+            } else {
+                runicPreview.textContent = code;
+            }
+        }
+        
+        codeEditor.addEventListener('input', updatePreview);
+        
+        // Load example
+        exampleSelect.addEventListener('change', (e) => {
+            const example = e.target.value;
+            if (example && window.APLExamples && window.APLExamples[example]) {
+                codeEditor.value = currentMode === 'runic' 
+                    ? window.APLExamples[example].runic 
+                    : window.APLExamples[example].ascii;
+                updatePreview();
+            }
+        });
+        
+        // Run code
+        document.getElementById('runBtn').addEventListener('click', async () => {
+            const code = codeEditor.value;
+            output.textContent = '> Running...\n';
+            
+            const startTime = performance.now();
+            try {
+                const result = await apl.run(code);
+                const endTime = performance.now();
+                
+                if (result.success) {
+                    output.textContent = `> Success!\n\nResult: ${JSON.stringify(result.result, null, 2)}`;
+                    opsCount.textContent = result.compiled?.code?.operations?.length || 0;
+                } else {
+                    output.textContent = `> Error in ${result.stage}:\n${result.error}`;
+                }
+                
+                execTime.textContent = `${(endTime - startTime).toFixed(2)}ms`;
+            } catch (error) {
+                output.textContent = `> Runtime Error:\n${error.message}`;
+            }
+        });
+        
+        // Compile only
+        document.getElementById('compileBtn').addEventListener('click', () => {
+            const code = codeEditor.value;
+            output.textContent = '> Compiling...\n';
+            
+            try {
+                const compiled = apl.compile(code);
+                
+                if (compiled.success) {
+                    output.textContent = `> Compilation successful!\n\nMode: ${compiled.sourceMode}\nOperations: ${compiled.code?.operations?.length || 0}\n\n${JSON.stringify(compiled.code, null, 2)}`;
+                    opsCount.textContent = compiled.code?.operations?.length || 0;
+                } else {
+                    output.textContent = `> Compilation Error:\n${compiled.error}`;
+                }
+            } catch (error) {
+                output.textContent = `> Compiler Error:\n${error.message}`;
+            }
+        });
+        
+        // Clear
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            codeEditor.value = '';
+            output.textContent = '> Cleared. Ready for new code...';
+            opsCount.textContent = '0';
+            execTime.textContent = '0ms';
+            updatePreview();
+        });
+        
+        // Initialize
+        updatePreview();
+        output.textContent = `> APL v${APL.version} loaded and ready!\n> Enter code and click Run or Compile...`;
+    </script>
+</body>
+</html>
